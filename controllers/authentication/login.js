@@ -47,12 +47,15 @@ const loginController = async (req, res) => {
       )
     }
 
+    const token = await existingUser.generateAuthToken()
+
     return (
       res
         .status(httpStatusCode.OK)
         .json({
           success: true,
-          message: 'Authentication completed.'
+          message: 'Authentication completed.',
+          token
         })
     )
   } catch (error) {

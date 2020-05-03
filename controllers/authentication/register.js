@@ -22,12 +22,15 @@ const register = async (req, res) => {
 
     const user = await db.User.create(body)
 
+    const token = await user.generateAuthToken()
+
     return (
       res
         .status(httpStatusCode.CREATED)
         .json({
           success: true,
-          user
+          user,
+          token
         })
     )
   } catch (error) {
