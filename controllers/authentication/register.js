@@ -1,5 +1,7 @@
 const httpStatusCode = require('http-status-codes')
 
+const { schemaErrorHandler } = require('../../utils')
+
 const register = async (req, res) => {
   try {
     const {body, db} = req
@@ -19,6 +21,7 @@ const register = async (req, res) => {
     }
 
     const user = await db.User.create(body)
+
     return (
       res
         .status(httpStatusCode.CREATED)
@@ -34,7 +37,7 @@ const register = async (req, res) => {
         .status(httpStatusCode.INTERNAL_SERVER_ERROR)
         .json({
           success: false,
-          message: 'Internal server error!'
+          message: schemaErrorHandler(error) || 'Internal server error'
         })
     )
   }
