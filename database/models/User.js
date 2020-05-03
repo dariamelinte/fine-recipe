@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const userSchema = new Schema({
   firstName: {
@@ -32,15 +33,18 @@ const userSchema = new Schema({
     minlength: [6, 'The password must contain at least 6 characters'],
     validate: (value) => {
       const valueIncludesPassword = value.toLowerCase().includes('password')
-      const valueIsAlphanumeric = validator.isAlphanumeric(value)
 
       if (valueIncludesPassword) {
         throw new Error('The password must not contain the word "password".')
-      } else if (!valueIsAlphanumeric) {
-        throw Error('The password must only contain letters and numbers.')
       }
     }
-  }
+  },
+  tokens: [{
+    token: {
+      type: String,
+      required: true
+    }
+  }]
 }, {
   timestamps: true
 })
@@ -56,6 +60,17 @@ userSchema.pre('save', async function (next) {
 
   next()
 })
+
+userSchema.methods.generateAuthToken = async function () {
+  const user = this
+
+  const token = jwt.sign({ id: user._id.toString() }, process.env.TOKEN)
+
+  user.tokens = [...user.tokens, { token }]
+  await user.save()
+  
+  return token
+}
 
 const User = model('users', userSchema)
 
