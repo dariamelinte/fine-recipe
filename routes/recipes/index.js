@@ -1,0 +1,9 @@
+const router = require('express').Router()
+
+const { recipes } = require('../../controllers')
+
+router.post('/', recipes.createRecipe)
+router.get('/:id', recipes.readRecipe)
+router.get('/', recipes.readRecipes)
+
+module.exports = router

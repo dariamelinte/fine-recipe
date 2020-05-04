@@ -17,23 +17,27 @@ const recipeSchema = new Schema({
     default: null,
     trim: true,
   },
-  ingredients: [{
-    name: {
-      type: String,
-      required: [true, 'Every ingredient should have a name'],
-      default: null,
-      trim: true,
-    },
-    quantity: {
-      type: String,
-      required: [true, 'Every ingredient should have a quantity'],
-      default: null,
-      trim: true,
-    }
-  }],
+  ingredients: {
+    type: [{
+      name: {
+        type: String,
+        required: [true, 'Every ingredient should have a name'],
+        default: null,
+        trim: true,
+      },
+      quantity: {
+        type: String,
+        required: [true, 'Every ingredient should have a quantity'],
+        default: null,
+        trim: true,
+      }
+    }],
+    default: undefined,
+    required: [true, 'Every recipe should have ingredients']
+  },
   preparationSteps: {
     type: String,
-    required: [true, 'Every recipe should have a title'],
+    required: [true, 'Every recipe should have preparation steps'],
     default: null,
     trim: true
   },

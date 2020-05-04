@@ -1,5 +1,9 @@
 const authentication = require('./authentication')
+const recipes = require('./recipes')
+const search = require('./search')
 
 module.exports = {
-  authentication
+  authentication,
+  recipes,
+  search
 }
