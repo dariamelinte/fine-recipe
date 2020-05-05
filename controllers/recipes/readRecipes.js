@@ -4,8 +4,6 @@ const readRecipes = async (req, res) => {
   try {
     const recipes = await req.db.Recipe.find({})
 
-    console.log('idkbsad')
-
     return (
       res
         .status(httpStatusCode.OK)

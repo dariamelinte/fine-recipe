@@ -1,7 +1,7 @@
 const httpStatusCode = require('http-status-codes')
 const { mongo: { ObjectId }} = require('mongoose')
 
-const readRecipe = async (req, res) => {
+const deleteRecipe = async (req, res) => {
   try {
     const { db, params } = req
 
@@ -18,12 +18,14 @@ const readRecipe = async (req, res) => {
       )
     }
 
+    await db.Recipe.deleteOne({ _id: ObjectId(params.id)})
+
     return (
       res
         .status(httpStatusCode.OK)
         .json({
           success: true,
-          message: recipe
+          message: 'Recipe deleted successfully'
         })
     )
   } catch (error) {
@@ -39,4 +41,4 @@ const readRecipe = async (req, res) => {
   }
 }
 
-module.exports = readRecipe
+module.exports = deleteRecipe
