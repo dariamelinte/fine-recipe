@@ -46,6 +46,19 @@ const userSchema = new Schema({
     }
   }],
   favoriteIds: [String],
+  skills: {
+    type: String,
+    required: [true, 'Every user should have a skill status: No skills / Amateur / Chef'],
+    default: 'Amateur',
+    trim: true,
+    validate: (value) => {
+      const notValid = !(value === 'No skills' || value === 'Amateur' || value === 'Chef')
+
+      if (notValid) {
+        throw Error("The skill status should be one of No skills / Amateur / Chef")
+      }
+    }
+  }
 }, {
   timestamps: true
 })

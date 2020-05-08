@@ -9,11 +9,11 @@ const users = require('./users')
 
 router.use('/auth', authentication)
 
-router.use(authMiddleware)
+// router.use(authMiddleware)
 router.use('/search', urlStringParserMiddleware)
 
-router.use('/recipes', recipes)
-router.use('/search', search)
-router.use('/users', users)
+router.use('/recipes', authMiddleware, recipes)
+router.use('/search', authMiddleware, search)
+router.use('/users', authMiddleware, users)
 
 module.exports = router
