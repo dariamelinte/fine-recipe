@@ -2,7 +2,7 @@ const httpStatusCode = require('http-status-codes')
 
 const searchRecipes = async (req, res) => {
   try {
-    const { db, parsedUrl } = req
+    const { db, parsedUrl, user } = req
 
     const searchedTitle = parsedUrl && parsedUrl.title
 
