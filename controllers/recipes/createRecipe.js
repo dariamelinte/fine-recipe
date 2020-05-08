@@ -4,9 +4,11 @@ const { schemaErrorHandler } = require('../../utils')
 
 const createRecipe = async (req, res) => {
   try {
-    const { db, body } = req
+    const { db, body, user } = req
 
-    const recipe = await db.Recipe.create(body)
+    console.log(user)
+
+    const recipe = await db.Recipe.create({ ...body, userId: user._id })
 
     return (
       res
