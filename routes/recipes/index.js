@@ -8,4 +8,6 @@ router.get('/', recipes.readRecipes)
 router.patch('/:id', recipes.updateRecipe)
 router.delete('/:id', recipes.deleteRecipe)
 
+router.post('/:id/add-to-favorite', recipes.addToFavorite)
+
 module.exports = router

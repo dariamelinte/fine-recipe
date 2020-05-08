@@ -1,9 +1,8 @@
 const router = require('express').Router()
 
 const { users } = require('../../controllers')
-const me = require('./me')
 
-router.use('/me', me)
-router.post('/logout', users.logout)
+router.get('/', users.me)
+router.get('/favorite-recipes', users.seeFavorites)
 
 module.exports = router

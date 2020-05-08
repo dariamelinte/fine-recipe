@@ -1,5 +1,7 @@
 const httpStatusCode = require('http-status-codes')
 
+const { getRecipesMainContent } = require('../../utils')
+
 const searchRecipes = async (req, res) => {
   try {
     const { db, parsedUrl, user } = req
@@ -24,12 +26,14 @@ const searchRecipes = async (req, res) => {
       )
     }
 
+    const shownData = getRecipesMainContent(recipes)
+
     return (
       res
         .status(httpStatusCode.OK)
         .json({
           success: true,
-          message: recipes
+          message: shownData
         })
     )
   } catch (error) {

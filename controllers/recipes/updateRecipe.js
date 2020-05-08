@@ -4,7 +4,7 @@ const { mongo: { ObjectId }} = require('mongoose')
 const { schemaErrorHandler } = require('../../utils')
 
 const updateRecipe = async (req, res) => {
-  const { db, params, body } = req
+  const { db, params, body, user } = req
   const recipeId = params.id
 
   const updates = Object.keys(body)
@@ -22,7 +22,7 @@ const updateRecipe = async (req, res) => {
   }
 
   try {
-    const recipe = await db.Recipe.findOne({ _id: ObjectId(recipeId) })
+    const recipe = await db.Recipe.findOne({ _id: ObjectId(recipeId), userId: user._id })
 
     if (!recipe) {
       return (

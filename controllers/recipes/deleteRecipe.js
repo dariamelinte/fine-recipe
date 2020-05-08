@@ -3,9 +3,12 @@ const { mongo: { ObjectId }} = require('mongoose')
 
 const deleteRecipe = async (req, res) => {
   try {
-    const { db, params } = req
+    const { db, params, user } = req
 
-    const recipe = await db.Recipe.findOne({ _id: ObjectId(params.id) })
+    const recipe = await db.Recipe.findOne({
+      _id: ObjectId(params.id),
+      userId: user._id
+    })
 
     if (!recipe) {
       return (

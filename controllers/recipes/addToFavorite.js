@@ -1,9 +1,11 @@
 const httpStatusCode = require('http-status-codes')
 const { mongo: { ObjectId }} = require('mongoose')
 
-const readRecipe = async (req, res) => {
+const addToFavorite = async (req, res) => {
   try {
-    const { db, params } = req
+    const { db, params, user } = req
+
+    console.log(params)
 
     const recipe = await db.Recipe.findOne({ _id: ObjectId(params.id) })
 
@@ -18,12 +20,15 @@ const readRecipe = async (req, res) => {
       )
     }
 
+    user.favoriteIds = [...user.favoriteIds, recipe._id]
+    await user.save()
+
     return (
       res
         .status(httpStatusCode.OK)
         .json({
           success: true,
-          message: recipe
+          message: user.favoriteIds
         })
     )
   } catch (error) {
@@ -39,4 +44,4 @@ const readRecipe = async (req, res) => {
   }
 }
 
-module.exports = readRecipe
+module.exports = addToFavorite

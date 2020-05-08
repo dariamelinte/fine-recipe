@@ -6,8 +6,6 @@ const createRecipe = async (req, res) => {
   try {
     const { db, body, user } = req
 
-    console.log(user)
-
     const recipe = await db.Recipe.create({ ...body, userId: user._id })
 
     return (

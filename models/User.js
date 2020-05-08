@@ -44,7 +44,8 @@ const userSchema = new Schema({
       type: String,
       required: true
     }
-  }]
+  }],
+  favoriteIds: [String],
 }, {
   timestamps: true
 })

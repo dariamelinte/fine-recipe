@@ -41,6 +41,19 @@ const recipeSchema = new Schema({
     default: null,
     trim: true
   },
+  status: {
+    type: String,
+    required: [true, 'Every recipe should have a status: private / public'],
+    default: 'public',
+    trim: true,
+    validate: (value) => {
+      const notValid = !(value === 'public' || value === 'private')
+
+      if (notValid) {
+        throw Error("The status should be of type 'public' or 'private")
+      }
+    }
+  }
   // image: {
   //   type: Object,
   //   required: true

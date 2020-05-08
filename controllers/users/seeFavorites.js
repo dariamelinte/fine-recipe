@@ -1,23 +1,19 @@
 const httpStatusCode = require('http-status-codes')
 
-const { getRecipesMainContent } = require('../../utils')
-
-const readRecipes = async (req, res) => {
+const seeFavorites = async (req, res) => {
   try {
-    const { db, } = req
+    const { db, user } = req
 
     const recipes = await db.Recipe.find({
-      status: 'public'
+      _id: user.favoriteIds
     })
-
-    const shownData = getRecipesMainContent(recipes)
 
     return (
       res
         .status(httpStatusCode.OK)
         .json({
-          success: true,
-          message: shownData
+          success: false,
+          message: (recipes.length && recipes) || 'You don\'t have any recipe added to the list.'
         })
     )
   } catch (error) {
@@ -33,4 +29,4 @@ const readRecipes = async (req, res) => {
   }
 }
 
-module.exports = readRecipes
+module.exports = seeFavorites

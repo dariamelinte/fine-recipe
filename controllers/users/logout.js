@@ -1,8 +1,6 @@
 const { mongo: { ObjectId } } = require('mongoose')
 const httpStatusCode = require('http-status-codes')
 
-const { schemaErrorHandler } = require('../../utils')
-
 const logout = async (req, res) => {
   try {
     const { token: storedToken, user: storedUser, db } = req
@@ -27,7 +25,7 @@ const logout = async (req, res) => {
         .status(httpStatusCode.INTERNAL_SERVER_ERROR)
         .json({
           success: false,
-          message: schemaErrorHandler(error) || 'Internal server error'
+          message: 'Internal server error'
         })
     )
   }
