@@ -9,5 +9,6 @@ router.patch('/:id', recipes.updateRecipe)
 router.delete('/:id', recipes.deleteRecipe)
 
 router.post('/:id/add-to-favorite', recipes.addToFavorite)
+router.post('/:id/add-comment', recipes.addComment)
 
 module.exports = router

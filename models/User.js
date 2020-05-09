@@ -58,7 +58,9 @@ const userSchema = new Schema({
         throw Error("The skill status should be one of No skills / Amateur / Chef")
       }
     }
-  }
+  },
+  followsUserIds: [String],
+  followedByUserIds: [String]
 }, {
   timestamps: true
 })

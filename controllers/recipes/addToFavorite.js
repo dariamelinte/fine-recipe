@@ -5,8 +5,6 @@ const addToFavorite = async (req, res) => {
   try {
     const { db, params, user } = req
 
-    console.log(params)
-
     const recipe = await db.Recipe.findOne({ _id: ObjectId(params.id) })
 
     if (!recipe) {
@@ -14,7 +12,7 @@ const addToFavorite = async (req, res) => {
         res
           .status(httpStatusCode.NOT_FOUND)
           .json({
-            success: true,
+            success: false,
             message: 'We could not find the recipe that you were looking for'
           })
       )

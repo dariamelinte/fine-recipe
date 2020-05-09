@@ -1,14 +1,13 @@
 const httpStatusCode = require('http-status-codes')
 const { mongo: { ObjectId }} = require('mongoose')
 
-const readRecipe = async (req, res) => {
-  try {
-    const { db, params, user } = req
+const { schemaErrorHandler } = require('../../utils')
 
-    const recipe = await db.Recipe.findOne({
-      _id: ObjectId(params.id),
-      $or: [{ status: 'public' }, { userId: user._id}]
-    })
+const addComment = async (req, res) => {
+  try {
+    const { db, params, user, body } = req
+
+    const recipe = await db.Recipe.findOne({ _id: ObjectId(params.id) })
 
     if (!recipe) {
       return (
@@ -21,14 +20,19 @@ const readRecipe = async (req, res) => {
       )
     }
 
-    const { title, description, ingredients, preparationSteps, comments } = recipe
+    recipe.comments = [...recipe.comments, {
+      userId: user._id,
+      content: body.content
+    }]
+
+    const updatedRecipe = await recipe.save()
 
     return (
       res
         .status(httpStatusCode.OK)
         .json({
           success: true,
-          message: { title, description, ingredients, preparationSteps, comments }
+          message: updatedRecipe
         })
     )
   } catch (error) {
@@ -38,10 +42,10 @@ const readRecipe = async (req, res) => {
         .status(httpStatusCode.INTERNAL_SERVER_ERROR)
         .json({
           success: false,
-          message: 'Internal server error'
+          message: schemaErrorHandler(error) || 'Internal server error'
         })
     )
   }
 }
 
-module.exports = readRecipe
+module.exports = addComment

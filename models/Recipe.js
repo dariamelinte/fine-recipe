@@ -53,7 +53,21 @@ const recipeSchema = new Schema({
         throw Error("The status should be of type 'public' or 'private")
       }
     }
-  }
+  },
+  comments: [{
+    userId: {
+      type: String,
+      required: [true, 'Every comment should have a userId'],
+      default: null,
+      trim: true,
+    },
+    content: {
+      type: String,
+      required: [true, 'Every comment should have a content'],
+      default: null,
+      trim: true,
+    }
+  }]
   // image: {
   //   type: Object,
   //   required: true

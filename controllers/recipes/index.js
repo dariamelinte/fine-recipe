@@ -4,6 +4,7 @@ const readRecipes = require('./readRecipes')
 const updateRecipe = require('./updateRecipe')
 const deleteRecipe = require('./deleteRecipe')
 const addToFavorite = require('./addToFavorite')
+const addComment = require('./addComment')
 
 module.exports = {
   createRecipe,
@@ -11,5 +12,6 @@ module.exports = {
   readRecipes,
   updateRecipe,
   deleteRecipe,
-  addToFavorite
+  addToFavorite,
+  addComment
 }

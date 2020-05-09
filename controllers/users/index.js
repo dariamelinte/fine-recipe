@@ -5,6 +5,8 @@ const editProfile = require('./editProfile')
 const deleteAccount = require('./deleteAccount')
 const changePassword = require('./changePassword')
 const userProfile = require('./userProfile')
+const followUser = require('./followUser')
+const unfollowUser = require('./unfollowUser')
 
 module.exports = {
   me,
@@ -13,5 +15,7 @@ module.exports = {
   editProfile,
   deleteAccount,
   changePassword,
-  userProfile
+  userProfile,
+  followUser,
+  unfollowUser
 }
