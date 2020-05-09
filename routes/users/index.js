@@ -4,6 +4,6 @@ const { users } = require('../../controllers')
 const me = require('./me')
 
 router.use('/me', me)
-router.post('/logout', users.logout)
+router.get('/:id', users.userProfile)
 
 module.exports = router

@@ -1,9 +1,25 @@
 const httpStatusCode = require('http-status-codes')
+const { mongo : { ObjectId } } = require('mongoose')
 
-const me = async (req, res) => {
+const userProfile = async (req, res) => {
   try {
-    const { user, db } = req
-    const recipes = await db.Recipe.find({ userId: user._id })
+    const { params, db } = req
+
+    const user = await db.User.findOne({ _id: ObjectId(params.id) })
+
+    if (!user) {
+      return (
+        res
+          .status(httpStatusCode.NOT_FOUND)
+          .json({
+            success: false,
+            message: 'User not found!'
+          })
+      )
+    }
+
+    const recipes = await db.Recipe.find({ userId: user._id, status: 'public' })
+
     const { firstName, lastName, email, skills} = user
 
     return (
@@ -28,4 +44,4 @@ const me = async (req, res) => {
   }
 }
 
-module.exports = me
+module.exports = userProfile

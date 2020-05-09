@@ -9,7 +9,6 @@ const users = require('./users')
 
 router.use('/auth', authentication)
 
-// router.use(authMiddleware)
 router.use('/search', urlStringParserMiddleware)
 
 router.use('/recipes', authMiddleware, recipes)
