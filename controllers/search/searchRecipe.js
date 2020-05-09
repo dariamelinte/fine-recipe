@@ -1,19 +1,20 @@
 const httpStatusCode = require('http-status-codes')
 
 const { getRecipesMainContent } = require('../../utils')
+const { PER_PAGE } = require('../../enums')
 
 const searchRecipes = async (req, res) => {
   try {
-    const { db, parsedUrl, user } = req
-
-    const searchedTitle = parsedUrl && parsedUrl.title
+    const { db, parsedUrl } = req
+    const title = parsedUrl.title
+    const page = parsedUrl.page
 
     const recipes = await db.Recipe.find({
       title: {
-        $regex: new RegExp(searchedTitle),
+        $regex: new RegExp(title),
         $options: 'i'
       }
-    })
+    }).limit(PER_PAGE).skip(PER_PAGE * (page - 1))
 
     if (!recipes.length) {
       return (

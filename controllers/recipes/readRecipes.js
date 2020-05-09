@@ -1,14 +1,16 @@
 const httpStatusCode = require('http-status-codes')
 
 const { getRecipesMainContent } = require('../../utils')
+const { PER_PAGE } = require('../../enums')
 
 const readRecipes = async (req, res) => {
   try {
-    const { db, } = req
+    const { db, parsedUrl } = req
+    const page = parsedUrl.page
 
     const recipes = await db.Recipe.find({
       status: 'public'
-    })
+    }).limit(PER_PAGE).skip(PER_PAGE * (page - 1))
 
     const shownData = getRecipesMainContent(recipes)
 

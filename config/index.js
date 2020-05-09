@@ -1,7 +1,7 @@
 const dotenv = require('dotenv')
-const { Enums } = require('../enums')
+const { DEVELOPMENT } = require('../enums')
 
-const ENV = process.env.NODE_ENV || Enums.DEVELOPMENT
+const ENV = process.env.NODE_ENV || DEVELOPMENT
 
 const config = dotenv.config({
   path: `./config/${ENV}.env`

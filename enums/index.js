@@ -1,7 +1,6 @@
 const Enums = {
-  DEVELOPMENT: 'dev'
+  DEVELOPMENT: 'dev',
+  PER_PAGE: 2
 }
 
-module.exports = {
-  Enums
-}
+module.exports = Enums
