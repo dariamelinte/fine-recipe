@@ -1,14 +1,15 @@
 const httpStatusCode = require('http-status-codes')
 const { mongo: { ObjectId }} = require('mongoose')
+const cloudinary = require('cloudinary').v2
 
 const { schemaErrorHandler } = require('../../utils')
 
 const updateRecipe = async (req, res) => {
-  const { db, params, body, user } = req
+  const { db, params, body, user, files } = req
   const recipeId = params.id
 
   const updates = Object.keys(body)
-  const allowedUpdates = ['title', 'description', 'ingredients', 'preparationSteps']
+  const allowedUpdates = ['title', 'description', 'ingredients', 'preparationSteps', 'image']
 
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
@@ -23,6 +24,7 @@ const updateRecipe = async (req, res) => {
 
   try {
     const recipe = await db.Recipe.findOne({ _id: ObjectId(recipeId), userId: user._id })
+    let imageUrl = recipe.image
 
     if (!recipe) {
       return (
@@ -35,7 +37,26 @@ const updateRecipe = async (req, res) => {
       )
     }
 
-    await db.Recipe.updateOne({ _id: ObjectId(recipeId) }, body, { runValidators: true });
+    if (files && files.recipeImage) {
+      await cloudinary.uploader.upload(`${files.recipeImage.tempFilePath}`, (error, response) => {
+        if (error) {
+          console.log(error);
+        }
+
+        if (response) {
+          imageUrl = response.url
+        }
+      });
+    }
+
+    await db.Recipe.updateOne({ 
+      _id: ObjectId(recipeId)
+    }, {
+      ...body,
+      image: imageUrl
+    }, {
+      runValidators: true
+    });
 
     const newRecipe = await db.Recipe.findOne({ _id: ObjectId(recipeId) })
 

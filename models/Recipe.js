@@ -67,11 +67,8 @@ const recipeSchema = new Schema({
       default: null,
       trim: true,
     }
-  }]
-  // image: {
-  //   type: Object,
-  //   required: true
-  // }
+  }],
+  image: Object
 }, {
   timestamps: true,
 })
