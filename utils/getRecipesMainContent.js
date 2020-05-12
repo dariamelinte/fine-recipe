@@ -1,6 +1,6 @@
 const getRecipesMainContent = (recipes) => (
-  recipes.map(({ title, preparationSteps, description, ingredients, comments}) => ({
-    title, description, preparationSteps, ingredients, comments
+  recipes.map(({ title, preparationSteps, description, ingredients, comments, image}) => ({
+    title, description, preparationSteps, ingredients, comments, image
   }))
 )
 
