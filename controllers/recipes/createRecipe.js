@@ -1,7 +1,5 @@
 const httpStatusCode = require('http-status-codes')
 
-const { schemaErrorHandler } = require('../../utils')
-
 const createRecipe = async (req, res) => {
   try {
     const { db, body, user } = req

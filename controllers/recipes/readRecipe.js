@@ -21,14 +21,14 @@ const readRecipe = async (req, res) => {
       )
     }
 
-    const { title, description, ingredients, preparationSteps, comments } = recipe
+    const { title, description, ingredients, preparationSteps, comments, image } = recipe
 
     return (
       res
         .status(httpStatusCode.OK)
         .json({
           success: true,
-          message: { title, description, ingredients, preparationSteps, comments }
+          message: { title, description, ingredients, preparationSteps, comments, image }
         })
     )
   } catch (error) {

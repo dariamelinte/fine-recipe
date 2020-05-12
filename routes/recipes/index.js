@@ -14,8 +14,6 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
-console.log(multer.memoryStorage())
-
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
@@ -24,7 +22,7 @@ const upload = multer({
   fileFilter,
 })
 
-router.post('/', upload.single(RECIPE_IMAGE), recipes.createRecipe)
+router.post('/', upload.single(RECIPE_IMAGE), recipes.createRecipe, imageUploadHandler)
 router.get('/:id', recipes.readRecipe)
 router.get('/', recipes.readRecipes)
 router.patch('/:id', upload.single(RECIPE_IMAGE), recipes.updateRecipe, imageUploadHandler)
