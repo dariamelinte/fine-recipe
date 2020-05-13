@@ -30,5 +30,6 @@ router.delete('/:id', recipes.deleteRecipe)
 
 router.post('/:id/add-to-favorite', recipes.addToFavorite)
 router.post('/:id/add-comment', recipes.addComment)
+router.post('/:id/download', recipes.downloadRecipe)
 
 module.exports = router
