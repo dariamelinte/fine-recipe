@@ -18,6 +18,19 @@ const addToFavorite = async (req, res) => {
       )
     }
 
+    const alreadyAdded = user.favoriteIds.find(id => id == recipe._id)
+
+    if (alreadyAdded) {
+      return (
+        res
+          .status(httpStatusCode.NOT_ACCEPTABLE)
+          .json({
+            success: false,
+            message: 'The recipe is already added to Favoriter'
+          })
+      )
+    }
+
     user.favoriteIds = [...user.favoriteIds, recipe._id]
     await user.save()
 

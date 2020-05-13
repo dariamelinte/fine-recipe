@@ -5,7 +5,7 @@ const { schemaErrorHandler } = require('../../utils')
 
 const changePassword = async (req, res) => {
   try {
-    const { db, body, user } = req
+    const { body, user } = req
 
     const validPassword = await bcrypt.compare(body.oldPassword, user.password)
 
