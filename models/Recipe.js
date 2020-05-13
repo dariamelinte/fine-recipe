@@ -33,7 +33,7 @@ const recipeSchema = new Schema({
       }
     }],
     default: undefined,
-    required: [true, 'Every recipe should have ingredients']
+    required: [true, 'Every recipe should have ingredients'],
   },
   preparationSteps: {
     type: String,

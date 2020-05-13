@@ -20,14 +20,14 @@ const userProfile = async (req, res) => {
 
     const recipes = await db.Recipe.find({ userId: user._id, status: 'public' })
 
-    const { firstName, lastName, email, skills, followsUserIds, followedByUserIds} = user
+    const { firstName, lastName, email, skills, followsUserIds, followedByUserIds, favoriteIds } = user
 
     return (
       res
         .status(httpStatusCode.OK)
         .json({
           success: true,
-          message: { firstName, lastName, email, skills, recipes, followsUserIds, followedByUserIds }
+          message: { firstName, lastName, email, skills, recipes, followsUserIds, followedByUserIds, favoriteIds }
         })
     )
   } catch (error) {
